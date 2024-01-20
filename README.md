@@ -22,7 +22,11 @@ go build ztris.go
 7. Have fun!
 
 ## Controls
-- [<-] Move Left
-- [->] Move Right
-- [Spc] Drop Piece
-- [z] Rotate left
+- Move the tetronimo left and right using the arrow keys [<-, ->]
+- Drop tetronimo using the Spacebar
+- Rotate the tetronimo left using the z key
+
+## TODO
+- Add a player score to track progress
+- Add a level system to make the blocks fall faster every level
+- Add a fastfall system to allow blocks to fall if the user hold the down arrow
