@@ -1,7 +1,7 @@
 # ZTRIS
 
 ### About ZTRIS
-ZTRIS is a TUI tetris clone created in go using the (tview)[https://github.com/rivo/tview] api to render the TUI 
+ZTRIS is a TUI tetris clone created in go using the [tview](https://github.com/rivo/tview) api to render the TUI 
 
 ## How to run ZTRIS
 1. Clone this repo
