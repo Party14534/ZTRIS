@@ -1,0 +1,18 @@
+{"Time":"2024-01-19T22:06:48.102037496-05:00","Action":"start","Package":"ztris/test"}
+{"Time":"2024-01-19T22:06:48.118739105-05:00","Action":"run","Package":"ztris/test","Test":"TestBagWorks"}
+{"Time":"2024-01-19T22:06:48.118762403-05:00","Action":"output","Package":"ztris/test","Test":"TestBagWorks","Output":"=== RUN   TestBagWorks\n"}
+{"Time":"2024-01-19T22:06:48.118771327-05:00","Action":"run","Package":"ztris/test","Test":"TestBagWorks/Generates_unique_values_after_N_times"}
+{"Time":"2024-01-19T22:06:48.118775025-05:00","Action":"output","Package":"ztris/test","Test":"TestBagWorks/Generates_unique_values_after_N_times","Output":"=== RUN   TestBagWorks/Generates_unique_values_after_N_times\n"}
+{"Time":"2024-01-19T22:06:48.119147117-05:00","Action":"output","Package":"ztris/test","Test":"TestBagWorks","Output":"--- PASS: TestBagWorks (0.00s)\n"}
+{"Time":"2024-01-19T22:06:48.119170421-05:00","Action":"output","Package":"ztris/test","Test":"TestBagWorks/Generates_unique_values_after_N_times","Output":"    --- PASS: TestBagWorks/Generates_unique_values_after_N_times (0.00s)\n"}
+{"Time":"2024-01-19T22:06:48.119473721-05:00","Action":"output","Package":"ztris/test","Test":"TestBagWorks/Generates_unique_values_after_N_times","Output":"goos: linux\n"}
+{"Time":"2024-01-19T22:06:48.119478239-05:00","Action":"output","Package":"ztris/test","Test":"TestBagWorks/Generates_unique_values_after_N_times","Output":"goarch: amd64\n"}
+{"Time":"2024-01-19T22:06:48.119481608-05:00","Action":"output","Package":"ztris/test","Test":"TestBagWorks/Generates_unique_values_after_N_times","Output":"pkg: ztris/test\n"}
+{"Time":"2024-01-19T22:06:48.119537339-05:00","Action":"output","Package":"ztris/test","Test":"TestBagWorks/Generates_unique_values_after_N_times","Output":"cpu: 13th Gen Intel(R) Core(TM) i7-13700H\n"}
+{"Time":"2024-01-19T22:06:48.119547366-05:00","Action":"output","Package":"ztris/test","Test":"TestBagWorks/Generates_unique_values_after_N_times","Output":"BenchmarkBag\n"}
+{"Time":"2024-01-19T22:06:50.25165419-05:00","Action":"output","Package":"ztris/test","Test":"TestBagWorks/Generates_unique_values_after_N_times","Output":"BenchmarkBag-20    \t91533060\t        13.28 ns/op\n"}
+{"Time":"2024-01-19T22:06:50.251685967-05:00","Action":"pass","Package":"ztris/test","Test":"TestBagWorks/Generates_unique_values_after_N_times","Elapsed":0}
+{"Time":"2024-01-19T22:06:50.251695997-05:00","Action":"pass","Package":"ztris/test","Test":"TestBagWorks","Elapsed":0}
+{"Time":"2024-01-19T22:06:50.251697658-05:00","Action":"output","Package":"ztris/test","Output":"PASS\n"}
+{"Time":"2024-01-19T22:06:50.252177588-05:00","Action":"output","Package":"ztris/test","Output":"ok  \tztris/test\t2.150s\n"}
+{"Time":"2024-01-19T22:06:50.252188666-05:00","Action":"pass","Package":"ztris/test","Elapsed":2.15}
