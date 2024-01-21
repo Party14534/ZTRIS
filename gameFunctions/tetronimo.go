@@ -7,12 +7,13 @@ import (
 	"github.com/rivo/tview"
 )
 
-var dropTime uint8 = 60
 var dropping bool = false
 var lockTime uint8 = 0
 var playerBag = []int{0,1,2,3,4,5,6}
 var defaultBag = []int{0,1,2,3,4,5,6}
-
+var level uint8 = 0
+var linesClearedLvl = 0
+var score int = 0
 
 type Pos struct {
   x int8
@@ -23,6 +24,7 @@ type Tetronimo struct {
   pos Pos
   footprint [4]Pos
   frameSinceDrop uint8
+  symbol rune
 }
 
 func (t *Tetronimo) hasCollided() bool {
@@ -58,13 +60,14 @@ func SetTetronimo(app *tview.Application) {
       app.Stop()
       return
     }
-    state.board[block.y + t.pos.y][block.x + t.pos.x] = "X"
+    state.board[block.y + t.pos.y][block.x + t.pos.x] = string(t.symbol)
   }
   clearLine()
 }
 
 func clearLine() {
   board := &state.board
+  var linesCleared int = 0
   for i := 14; i >= 0; i-- {
     for j := 0; j < 10; j++ {
       if board[i][j] == "" { break }
@@ -79,11 +82,29 @@ func clearLine() {
         for l := 0; l < 10; l++ {
           board[0][l] = ""
         }
-
+        linesCleared++
         i++
       }
     }
-  } 
+  }
+  
+  if linesCleared > 0 {
+    if linesCleared == 1 {
+      score += 40 * (int(level) + 1)
+    } else if linesCleared == 2 {
+      score += 100 * (int(level) + 1)
+    } else if linesCleared == 3 {
+      score += 300 * (int(level) + 1)
+    } else {
+      score += 1200 * (int(level) + 1)
+    }
+
+    linesClearedLvl += linesCleared
+    if linesClearedLvl > 10 {
+      linesClearedLvl = linesClearedLvl % 10
+      level++
+    }
+  }
 }
 
 func (t *Tetronimo) canMoveDir(dir bool, state *gameState) bool {
@@ -187,6 +208,38 @@ func (t *Tetronimo) rotateLeft() {
   t.correctOutOfBounds()
 }
 
+func (t *Tetronimo) rotateRight() {
+
+  boxSize := max( t.getFootprintWidth(), t.getFootprintHeight() )
+  if boxSize == 2 { return }
+  center := boxSize/2
+  
+  buffers := t.footprint
+
+  for i := range t.footprint {
+    buffer := t.footprint[i]
+    newX := (center - buffer.y)
+    newY := -(center - buffer.x)
+    buffer.x = newX + center
+    buffer.y = newY + center
+
+    posY := buffer.y + t.pos.y
+    posX := buffer.x + t.pos.x
+    if posY >= 0 && posY < 15 {
+      if posX >= 0 && posX < 10 {
+        if state.board[posY][posX] != "" {
+          return
+        }
+      }
+    }
+
+    buffers[i] = buffer
+  }
+
+  t.footprint = buffers
+  t.correctOutOfBounds()
+}
+
 func (t *Tetronimo) correctOutOfBounds() {
   for i := range t.footprint {
     block := &t.footprint[i]
@@ -220,40 +273,53 @@ func CreateTetronimo(blockType int) (*Tetronimo) {
     t.footprint[1] = Pos{x: 1, y: 1}
     t.footprint[2] = Pos{x: 2, y: 1}
     t.footprint[3] = Pos{x: 3, y: 1}
+    t.symbol = 'L'
   } else if blockType == 1 {
     t.footprint[0] = Pos{x: 0, y: 0}
     t.footprint[1] = Pos{x: 0, y: 1}
     t.footprint[2] = Pos{x: 1, y: 1}
     t.footprint[3] = Pos{x: 2, y: 1}
+    t.symbol = 'J'
   } else if blockType == 2 {
     t.footprint[0] = Pos{x: 0, y: 1}
     t.footprint[1] = Pos{x: 1, y: 1}
     t.footprint[2] = Pos{x: 2, y: 1}
     t.footprint[3] = Pos{x: 2, y: 0}
+    t.symbol = 'L'
   } else if blockType == 3 {
     t.footprint[0] = Pos{x: 0, y: 0}
     t.footprint[1] = Pos{x: 1, y: 0}
     t.footprint[2] = Pos{x: 0, y: 1}
     t.footprint[3] = Pos{x: 1, y: 1}
+    t.symbol = 'O'
   } else if blockType == 4 {
     t.footprint[0] = Pos{x: 0, y: 1}
     t.footprint[1] = Pos{x: 1, y: 1}
     t.footprint[2] = Pos{x: 1, y: 0}
     t.footprint[3] = Pos{x: 2, y: 0}
+    t.symbol = 'S'
   } else if blockType == 5 {
     t.footprint[0] = Pos{x: 0, y: 1}
     t.footprint[1] = Pos{x: 1, y: 1}
     t.footprint[2] = Pos{x: 1, y: 0}
     t.footprint[3] = Pos{x: 2, y: 1}
+    t.symbol = 'T'
   } else if blockType == 6 {
     t.footprint[0] = Pos{x: 0, y: 0}
     t.footprint[1] = Pos{x: 1, y: 0}
     t.footprint[2] = Pos{x: 1, y: 1}
     t.footprint[3] = Pos{x: 2, y: 1}
+    t.symbol = 'Z'
   }
 
   
   return t
+}
+
+func getSpeed() uint8 {
+  speedLevel := level + 1
+  if speedLevel > 10 { speedLevel = 10 }
+  return 45 / speedLevel
 }
 
 func UpdateTetronimo(app *tview.Application) {
@@ -268,9 +334,9 @@ func UpdateTetronimo(app *tview.Application) {
 
   lockTime = 0
 
-  realDropTime := dropTime
+  realDropTime := getSpeed()
   if dropping {
-    realDropTime /= 3
+    realDropTime = 10
   }
 
   if t.frameSinceDrop >= realDropTime {

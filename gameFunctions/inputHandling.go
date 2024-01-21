@@ -20,6 +20,8 @@ func GetInput(event *tcell.EventKey) *tcell.EventKey {
     t.moveTetronimo(true)
   } else if event.Rune() == 'z' {
     t.rotateLeft()
-  } 
+  } else if event.Rune() == 'x' {
+    t.rotateRight()
+  }  
   return event
 }
