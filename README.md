@@ -29,6 +29,6 @@ go build ztris.go
 - Rotate the tetronimo right using the x key
 
 ## TODO
-- --Add a player score to track progress--
-- --Add a level system to make the blocks fall faster every level--
-- --Add a fastfall system to allow blocks to fall if the user holds the down arrow--
+- ~~Add a player score to track progress~~
+- ~~Add a level system to make the blocks fall faster every level~~
+- ~~Add a fastfall system to allow blocks to fall if the user holds the down arrow~~
