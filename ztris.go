@@ -14,6 +14,8 @@ func main() {
     SetTextAlign(tview.AlignCenter).
     SetDynamicColors(true)
 
+  textView.SetBorder(true)
+
   
   app = app.SetRoot(textView, true).SetInputCapture(gamefunctions.GetInput); 
 
