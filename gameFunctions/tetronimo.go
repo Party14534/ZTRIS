@@ -13,7 +13,7 @@ var playerBag = []int{0,1,2,3,4,5,6}
 var defaultBag = []int{0,1,2,3,4,5,6}
 var level uint8 = 0
 var linesClearedLvl = 0
-var score int = 0
+var Score int = 0
 
 type Pos struct {
   x int8
@@ -40,7 +40,7 @@ func (t *Tetronimo) hasCollided() bool {
 
 func nextToBlock(x int8, y int8, state *gameState) bool {
   
-  if y + 1 < 15 {
+  if y + 1 < 20 {
     if state.board[y+1][x] != "" {
       return true
     } 
@@ -68,7 +68,7 @@ func SetTetronimo(app *tview.Application) {
 func clearLine() {
   board := &state.board
   var linesCleared int = 0
-  for i := 14; i >= 0; i-- {
+  for i := 19; i >= 0; i-- {
     for j := 0; j < 10; j++ {
       if board[i][j] == "" { break }
       
@@ -90,13 +90,13 @@ func clearLine() {
   
   if linesCleared > 0 {
     if linesCleared == 1 {
-      score += 40 * (int(level) + 1)
+      Score += 40 * (int(level) + 1)
     } else if linesCleared == 2 {
-      score += 100 * (int(level) + 1)
+      Score += 100 * (int(level) + 1)
     } else if linesCleared == 3 {
-      score += 300 * (int(level) + 1)
+      Score += 300 * (int(level) + 1)
     } else {
-      score += 1200 * (int(level) + 1)
+      Score += 1200 * (int(level) + 1)
     }
 
     linesClearedLvl += linesCleared
@@ -193,7 +193,7 @@ func (t *Tetronimo) rotateLeft() {
 
     posY := buffer.y + t.pos.y
     posX := buffer.x + t.pos.x
-    if posY >= 0 && posY < 15 {
+    if posY >= 0 && posY < 20 {
       if posX >= 0 && posX < 10 {
         if state.board[posY][posX] != "" {
           return
@@ -225,7 +225,7 @@ func (t *Tetronimo) rotateRight() {
 
     posY := buffer.y + t.pos.y
     posX := buffer.x + t.pos.x
-    if posY >= 0 && posY < 15 {
+    if posY >= 0 && posY < 20 {
       if posX >= 0 && posX < 10 {
         if state.board[posY][posX] != "" {
           return
@@ -249,7 +249,7 @@ func (t *Tetronimo) correctOutOfBounds() {
     if posY < 0 {
       t.pos.y += int8(math.Abs(float64(posY)))
     }
-    if posY >= 15 {
+    if posY >= 20 {
       t.pos.y -= int8(math.Abs(float64(posY - 14)))
     }
 
@@ -319,7 +319,7 @@ func CreateTetronimo(blockType int) (*Tetronimo) {
 func getSpeed() uint8 {
   speedLevel := level + 1
   if speedLevel > 10 { speedLevel = 10 }
-  return 45 / speedLevel
+  return 60 / speedLevel
 }
 
 func UpdateTetronimo(app *tview.Application) {

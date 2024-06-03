@@ -7,7 +7,7 @@ import (
 )
 
 type gameState struct {
-  board [15][10]string
+  board [20][10]string
   gameOver bool
 }
 
@@ -16,7 +16,7 @@ func (g *gameState) toString() string {
 
   // Draw to string row by row
   s = append(s, "=====================\n")
-  for i := 0; i < 15; i++ {
+  for i := 0; i < 20; i++ {
     line := ""
     for j := 0; j < 10; j++ {
       if g.board[i][j] != "" {
@@ -29,7 +29,7 @@ func (g *gameState) toString() string {
     s = append(s, line)
   }
   s = append(s, "=====================\n")
-  scoreLine := fmt.Sprintf("Level: %v Score: %v", level, score)
+  scoreLine := fmt.Sprintf("Level: %v Score: %v", level, Score)
   s = append(s, scoreLine)
 
   for _, block := range t.footprint {
