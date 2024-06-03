@@ -15,6 +15,8 @@ var level uint8 = 0
 var linesClearedLvl = 0
 var Score int = 0
 
+var framesPerGridCell = []int{48,43,38,33,28,23,18,13,8,6,5,5,5,4,4,4,3,3,3,2,2,2,2,2,2,2,2,2,2,1}
+
 type Pos struct {
   x int8
   y int8
@@ -317,9 +319,12 @@ func CreateTetronimo(blockType int) (*Tetronimo) {
 }
 
 func getSpeed() uint8 {
-  speedLevel := level + 1
-  if speedLevel > 10 { speedLevel = 10 }
-  return 60 / speedLevel
+  sLevel := level
+  if sLevel >= 30 {
+    sLevel = 29
+  }
+  speedLevel := framesPerGridCell[sLevel]
+  return uint8(speedLevel)
 }
 
 func UpdateTetronimo(app *tview.Application) {
