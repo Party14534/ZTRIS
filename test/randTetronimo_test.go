@@ -25,6 +25,10 @@ func TestBagWorks(t *testing.T) {
         allUnique = false
         break
       }
+      if i > 0 && tTypes[i-1][6] == tTypes[i][0] {
+          allUnique = false
+          break
+      }
     }
 
     if !allUnique {
