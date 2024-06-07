@@ -14,6 +14,7 @@ var defaultBag = []int{0,1,2,3,4,5,6}
 var level uint8 = 0
 var linesClearedLvl = 0
 var Score int = 0
+var prevTType = -1;
 
 var framesPerGridCell = []int{48,43,38,33,28,23,18,13,8,6,5,5,5,4,4,4,3,3,3,2,2,2,2,2,2,2,2,2,2,1}
 
@@ -359,11 +360,15 @@ func RandTetronimo() int {
   if(len(playerBag) == 0) {
     playerBag = append(playerBag, defaultBag...)
   }
-
-  index := rand.Intn(len(playerBag))
-  tType := playerBag[index]
+  tType := prevTType
+  index := 0
+  for ; tType == prevTType; {
+    index = rand.Intn(len(playerBag))
+    tType = playerBag[index]
+  }
   
   playerBag = append(playerBag[:index], playerBag[index+1:]...)  
+  prevTType = tType
 
   return tType 
 }
